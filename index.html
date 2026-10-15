@@ -1,0 +1,524 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Lesson Story</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lato:wght@400;700&display=swap">
+
+<style>
+  /* Layout: single-column reading page with a rich hero, story body, and interactive feedback section */
+  :root {
+    --bg: #FAFAF7;
+    --fg: #1A1A1A;
+    --subtle: #6B6B6B;
+    --accent: #2D6A4F;
+    --accent-light: #E8F5EE;
+    --divider: #DDDDD8;
+    --card-bg: #FFFFFF;
+    --hero-bg: #2D6A4F;
+    --hero-fg: #FFFFFF;
+    --hero-sub: #B7D9C8;
+    --input-bg: #F4F4F0;
+    --input-border: #CCCCCC;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #141814;
+      --fg: #EEEEE8;
+      --subtle: #9A9A90;
+      --accent: #52B788;
+      --accent-light: #1A2E22;
+      --divider: #2E2E2A;
+      --card-bg: #1E221E;
+      --hero-bg: #1A2E22;
+      --hero-fg: #EEEEE8;
+      --hero-sub: #74B395;
+      --input-bg: #1E221E;
+      --input-border: #3A3A34;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #141814;
+    --fg: #EEEEE8;
+    --subtle: #9A9A90;
+    --accent: #52B788;
+    --accent-light: #1A2E22;
+    --divider: #2E2E2A;
+    --card-bg: #1E221E;
+    --hero-bg: #1A2E22;
+    --hero-fg: #EEEEE8;
+    --hero-sub: #74B395;
+    --input-bg: #1E221E;
+    --input-border: #3A3A34;
+    color-scheme: dark;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Lato', system-ui, sans-serif;
+    font-size: 1.05rem;
+    line-height: 1.75;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 0;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--hero-bg);
+    color: var(--hero-fg);
+    margin-left: max(-16px, calc(0px - env(safe-area-inset-left, 0px)));
+    margin-right: max(-16px, calc(0px - env(safe-area-inset-right, 0px)));
+    padding: 56px max(32px, env(safe-area-inset-left, 0px)) 48px;
+    text-align: center;
+  }
+  .hero-eyebrow {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--hero-sub);
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2.2rem, 7vw, 3.6rem);
+    font-weight: 900;
+    line-height: 1.1;
+    text-wrap: balance;
+    margin: 0 0 18px;
+  }
+  .hero-tagline {
+    font-size: 1.05rem;
+    color: var(--hero-sub);
+    max-width: 520px;
+    margin: 0 auto;
+    text-wrap: balance;
+  }
+  .hero-badge {
+    display: inline-block;
+    margin-top: 28px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    background: rgba(255,255,255,0.12);
+    color: var(--hero-fg);
+    border-radius: 100px;
+    padding: 6px 18px;
+    border: 1px solid rgba(255,255,255,0.22);
+  }
+
+  /* CONTENT */
+  .content {
+    max-width: 680px;
+    margin: 0 auto;
+    padding-block: 48px;
+  }
+
+  /* STORY */
+  .story-section { margin-bottom: 48px; }
+  .story-section h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent);
+    text-wrap: balance;
+    margin: 0 0 12px;
+  }
+  .story-section p {
+    margin: 0 0 16px;
+    color: var(--fg);
+    max-width: 62ch;
+  }
+
+  /* QUOTE PULLOUT */
+  .pullquote {
+    border-left: 4px solid var(--accent);
+    margin: 32px 0;
+    padding: 12px 24px;
+    background: var(--accent-light);
+    border-radius: 0 8px 8px 0;
+  }
+  .pullquote p {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.15rem;
+    font-style: italic;
+    color: var(--fg);
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  /* LESSON HIGHLIGHTS */
+  .highlights {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin: 32px 0 48px;
+  }
+  .highlight-card {
+    background: var(--card-bg);
+    border: 1px solid var(--divider);
+    border-radius: 10px;
+    padding: 20px 18px;
+  }
+  .highlight-card .icon {
+    font-size: 1.6rem;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .highlight-card h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 0 0 6px;
+    color: var(--accent);
+  }
+  .highlight-card p {
+    font-size: 0.88rem;
+    margin: 0;
+    color: var(--subtle);
+    line-height: 1.55;
+  }
+
+  /* DIVIDER */
+  hr.section-rule {
+    border: none;
+    border-top: 1px solid var(--divider);
+    margin: 40px 0;
+  }
+
+  /* QUESTIONS */
+  .questions-header {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin: 0 0 6px;
+    text-wrap: balance;
+  }
+  .questions-sub {
+    color: var(--subtle);
+    font-size: 0.92rem;
+    margin: 0 0 28px;
+  }
+  .question-block {
+    margin-bottom: 28px;
+  }
+  .question-block p {
+    font-weight: 700;
+    margin: 0 0 12px;
+    color: var(--fg);
+  }
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .option-btn {
+    background: var(--input-bg);
+    border: 1.5px solid var(--input-border);
+    border-radius: 8px;
+    padding: 11px 16px;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.95rem;
+    color: var(--fg);
+    cursor: pointer;
+    text-align: left;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .option-btn:hover { border-color: var(--accent); background: var(--accent-light); }
+  .option-btn.selected { border-color: var(--accent); background: var(--accent-light); font-weight: 700; }
+  .option-btn.correct { border-color: #2D6A4F; background: #E8F5EE; color: #1A4030; }
+  .option-btn.wrong   { border-color: #C0392B; background: #FDEDEC; color: #7B241C; }
+  .feedback-msg {
+    font-size: 0.88rem;
+    margin-top: 8px;
+    min-height: 1.2em;
+    color: var(--subtle);
+  }
+
+  /* VIEWS SECTION */
+  .views-section { margin-top: 48px; }
+  .views-section h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin: 0 0 6px;
+    text-wrap: balance;
+  }
+  .views-section p.lead {
+    color: var(--subtle);
+    font-size: 0.92rem;
+    margin: 0 0 20px;
+  }
+  textarea {
+    width: 100%;
+    min-height: 110px;
+    background: var(--input-bg);
+    border: 1.5px solid var(--input-border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.95rem;
+    color: var(--fg);
+    resize: vertical;
+    transition: border-color 0.15s;
+    display: block;
+  }
+  textarea:focus { outline: none; border-color: var(--accent); }
+  .submit-btn {
+    margin-top: 12px;
+    background: var(--accent);
+    color: #FFF;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 28px;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.97rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .submit-btn:hover { opacity: 0.88; }
+  .thanks-msg {
+    display: none;
+    margin-top: 14px;
+    background: var(--accent-light);
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-size: 0.95rem;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  /* EMAIL */
+  .email-section {
+    margin-top: 48px;
+    padding: 28px 24px;
+    background: var(--card-bg);
+    border: 1px solid var(--divider);
+    border-radius: 12px;
+    text-align: center;
+  }
+  .email-section p {
+    margin: 0 0 10px;
+    color: var(--subtle);
+    font-size: 0.92rem;
+  }
+  .email-address {
+    font-family: 'Lato', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--accent);
+    user-select: all;
+    word-break: break-all;
+  }
+  .copy-btn {
+    display: inline-block;
+    margin-top: 10px;
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 6px;
+    padding: 6px 16px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    color: var(--fg);
+    transition: border-color 0.15s;
+  }
+  .copy-btn:hover { border-color: var(--accent); }
+
+  /* FOOTER */
+  .footer {
+    margin-top: 56px;
+    margin-bottom: 32px;
+    text-align: center;
+    color: var(--subtle);
+    font-size: 0.82rem;
+    letter-spacing: 0.05em;
+  }
+  .footer strong { color: var(--accent); }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">Lesson Story · Learn &amp; Grow</div>
+  <h1>The Seed That Refused to Give Up</h1>
+  <p class="hero-tagline">A story about persistence, learning, and the courage to keep going when things get hard.</p>
+  <span class="hero-badge">✦ Motivational Reading</span>
+</section>
+
+<!-- MAIN CONTENT -->
+<main class="content">
+
+  <!-- STORY -->
+  <article>
+    <section class="story-section">
+      <h2>Chapter 1 — A Small Beginning</h2>
+      <p>Deep in the dry earth of a small village, a tiny seed was buried. The ground above it was cracked and pale. Other seeds nearby whispered, "There is no water here. Why even try?"</p>
+      <p>But this seed had a different thought. It had been given one gift before it fell into the ground — the memory of sunlight. And that memory was enough to keep it pushing upward, millimeter by millimeter, day after day.</p>
+    </section>
+
+    <div class="pullquote">
+      <p>"Every great tree was once a seed that decided to keep going despite the darkness around it."</p>
+    </div>
+
+    <section class="story-section">
+      <h2>Chapter 2 — The First Lesson</h2>
+      <p>One morning, a young girl named Amara came to water the garden. She almost missed the tiny green shoot poking through the hard soil. She knelt down and looked closely.</p>
+      <p>"How did you get here?" she whispered. "Nobody planted you. Nobody watered you."</p>
+      <p>The shoot did not answer in words. But Amara understood. <em>Some things grow not because everything is perfect — but because the will to grow is stronger than the reason to stop.</em></p>
+      <p>That day, Amara went back to the school she had left three months ago. She sat at her old desk, even though it felt too small. She opened a book, even though the words looked hard. She raised her hand, even though she was afraid of being wrong.</p>
+    </section>
+
+    <section class="story-section">
+      <h2>Chapter 3 — What the Seed Taught</h2>
+      <p>Weeks passed. The seed grew into a strong plant. Amara grew too — not just in school, but in the way she saw herself. She learned that <strong>failure is not falling down</strong>; it is staying down when you still have the strength to rise.</p>
+      <p>She shared the story of the seed with her younger brother, who was struggling with his sums. She told him: "You are not bad at numbers. You are just a seed that hasn't found the right direction yet. Keep pushing."</p>
+    </section>
+  </article>
+
+  <!-- LESSON HIGHLIGHTS -->
+  <div class="highlights">
+    <div class="highlight-card">
+      <span class="icon">🌱</span>
+      <h3>Start Small</h3>
+      <p>Every big achievement begins with one small, quiet step — even when no one is watching.</p>
+    </div>
+    <div class="highlight-card">
+      <span class="icon">📖</span>
+      <h3>Keep Learning</h3>
+      <p>A book opened today is a door to somewhere better tomorrow. Curiosity is a superpower.</p>
+    </div>
+    <div class="highlight-card">
+      <span class="icon">💪</span>
+      <h3>Don't Quit</h3>
+      <p>The hardest part of any journey is the moment just before it gets easier. Keep going.</p>
+    </div>
+  </div>
+
+  <hr class="section-rule">
+
+  <!-- QUESTIONS ABOUT THE STORY -->
+  <section>
+    <h2 class="questions-header">Questions About the Story</h2>
+    <p class="questions-sub">Think carefully and choose the best answer for each question.</p>
+
+    <div class="question-block">
+      <p>1. Why did the seed keep growing even when the ground was dry?</p>
+      <div class="options" id="q1">
+        <button class="option-btn" onclick="answer(this, 'q1', false)">A. It had plenty of water underground.</button>
+        <button class="option-btn" onclick="answer(this, 'q1', true)">B. It remembered sunlight and held on to hope.</button>
+        <button class="option-btn" onclick="answer(this, 'q1', false)">C. The other seeds helped it grow.</button>
+      </div>
+      <div class="feedback-msg" id="q1-fb"></div>
+    </div>
+
+    <div class="question-block">
+      <p>2. What did Amara decide to do after seeing the seed?</p>
+      <div class="options" id="q2">
+        <button class="option-btn" onclick="answer(this, 'q2', false)">A. She dug up the seed to study it.</button>
+        <button class="option-btn" onclick="answer(this, 'q2', false)">B. She told everyone in the village about it.</button>
+        <button class="option-btn" onclick="answer(this, 'q2', true)">C. She returned to school and started learning again.</button>
+      </div>
+      <div class="feedback-msg" id="q2-fb"></div>
+    </div>
+
+    <div class="question-block">
+      <p>3. According to the story, what is the true meaning of failure?</p>
+      <div class="options" id="q3">
+        <button class="option-btn" onclick="answer(this, 'q3', false)">A. Getting an answer wrong in class.</button>
+        <button class="option-btn" onclick="answer(this, 'q3', true)">B. Staying down when you still have the strength to rise.</button>
+        <button class="option-btn" onclick="answer(this, 'q3', false)">C. Not knowing the right direction to grow.</button>
+      </div>
+      <div class="feedback-msg" id="q3-fb"></div>
+    </div>
+  </section>
+
+  <hr class="section-rule">
+
+  <!-- VIEWS & OPINIONS -->
+  <section class="views-section">
+    <h2>Share Your Views &amp; Opinions</h2>
+    <p class="lead">What did this story mean to you? What lesson will you carry with you? We would love to hear your thoughts.</p>
+    <textarea id="opinion" placeholder="Write your thoughts here..."></textarea>
+    <button class="submit-btn" onclick="submitOpinion()">Submit My Opinion</button>
+    <div class="thanks-msg" id="thanks-msg">Thank you for sharing! Your voice matters. 🌱</div>
+  </section>
+
+  <!-- EMAIL US -->
+  <div class="email-section">
+    <p>Have more questions about the story, or want to share it with a teacher or friend?</p>
+    <p><strong>Feel free to Email us!</strong></p>
+    <div class="email-address" id="email-addr">favour571549@gmail.com</div>
+    <br>
+    <button class="copy-btn" onclick="copyEmail()">Copy Email Address</button>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>Powered by <strong>GD</strong> &nbsp;·&nbsp; Lesson Story &nbsp;·&nbsp; 2026</p>
+  </footer>
+
+</main>
+
+<script>
+  function answer(btn, qId, isCorrect) {
+    const group = document.getElementById(qId);
+    const buttons = group.querySelectorAll('.option-btn');
+    const fb = document.getElementById(qId + '-fb');
+    buttons.forEach(b => {
+      b.classList.remove('selected', 'correct', 'wrong');
+      b.disabled = true;
+    });
+    btn.classList.add(isCorrect ? 'correct' : 'wrong');
+    fb.textContent = isCorrect
+      ? '✓ Correct! Well done.'
+      : '✗ Not quite — read the story again and try to find the answer.';
+    fb.style.color = isCorrect ? 'var(--accent)' : '#C0392B';
+  }
+
+  function submitOpinion() {
+    const val = document.getElementById('opinion').value.trim();
+    if (!val) {
+      document.getElementById('opinion').focus();
+      return;
+    }
+    document.getElementById('thanks-msg').style.display = 'block';
+    document.getElementById('opinion').disabled = true;
+    document.querySelector('.submit-btn').disabled = true;
+    document.querySelector('.submit-btn').style.opacity = '0.5';
+  }
+
+  function copyEmail() {
+    const email = document.getElementById('email-addr').textContent;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(email).then(() => {
+        const btn = document.querySelector('.copy-btn');
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = 'Copy Email Address'; }, 2000);
+      }).catch(() => selectEmail());
+    } else {
+      selectEmail();
+    }
+  }
+
+  function selectEmail() {
+    const el = document.getElementById('email-addr');
+    const range = document.createRange();
+    range.selectNodeContents(el);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }
+</script>
+
+</body></html>
